@@ -29,30 +29,16 @@ class App extends Component {
       _title = this.state.contents[0].title;
       _desc = this.state.contents[0].desc;
     }
+    console.log('render', this);
     return (
       <div className="App">
-        {/* <Subject
+        <Subject
           title={this.state.subject.title}
           sub={this.state.subject.sub}
+          onChangePage={function() {
+            this.setState({ mode: 'welcome' });
+          }.bind(this)}
         />
-         */}
-        <header>
-          <h1>
-            <a
-              href="/"
-              onClick={function(e) {
-                console.log(e);
-                e.preventDefault();
-                this.setState({
-                  mode: 'read'
-                });
-              }.bind(this)}
-            >
-              {this.state.subject.title}
-            </a>
-          </h1>
-          {this.state.subject.sub}
-        </header>
         <TOC data={this.state.contents} />
         <Content title={_title} desc={_desc} />
       </div>
