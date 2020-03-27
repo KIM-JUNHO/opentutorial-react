@@ -30,7 +30,6 @@ class App extends Component {
       var data = this.state.contents[i];
       if (data.id === this.state.selected_content_id) {
         return data;
-        break;
       }
       i = i + 1;
     }
@@ -51,21 +50,17 @@ class App extends Component {
         <CreateContent
           onSubmit={function(_title, _desc) {
             this.max_content_id = this.max_content_id + 1;
-            // this.state.contents.push({
-            //   id: this.max_content_id,
-            //   title: _title,
-            //   desc: _desc
-            // });
-            var _contents = this.state.contents.concat({
+            var _contents = Array.from(this.state.contents);
+            _contents.push({
               id: this.max_content_id,
               title: _title,
               desc: _desc
             });
             this.setState({
-              contents: _contents
+              contents: _contents,
+              mode: 'read',
+              selected_content_id: this.max_content_id
             });
-
-            console.log(_title, _desc);
           }.bind(this)}
         />
       );
@@ -74,23 +69,20 @@ class App extends Component {
       _article = (
         <UpdateContent
           data={_content}
-          onSubmit={function(_title, _desc) {
-            this.max_content_id = this.max_content_id + 1;
-            // this.state.contents.push({
-            //   id: this.max_content_id,
-            //   title: _title,
-            //   desc: _desc
-            // });
-            var _contents = this.state.contents.concat({
-              id: this.max_content_id,
-              title: _title,
-              desc: _desc
-            });
+          onSubmit={function(_id, _title, _desc) {
+            var _contents = Array.from(this.state.contents);
+            var i = 0;
+            while (i < _contents.length) {
+              if (_contents[i].id === _id) {
+                _contents[i] = { id: _id, title: _title, desc: _desc };
+                break;
+              }
+              i = i + 1;
+            }
             this.setState({
-              contents: _contents
+              contents: _contents,
+              mode: 'read'
             });
-
-            console.log(_title, _desc);
           }.bind(this)}
         />
       );
