@@ -43,7 +43,10 @@ class App extends Component {
               onClick={function(e) {
                 console.log(e);
                 e.preventDefault();
-              }}
+                this.setState({
+                  mode: 'read'
+                });
+              }.bind(this)}
             >
               {this.state.subject.title}
             </a>
